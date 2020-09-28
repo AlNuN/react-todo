@@ -19,9 +19,9 @@ export default class App extends Component {
     this.addCategory = this.addCategory.bind(this);
   }
 
-  createNote(note, title) {
+  createNote(note, title, category) {
     this.setState({notes: [
-      ...this.state.notes, { title, note }]
+      ...this.state.notes, { title, note, category }]
     });
   }
 
@@ -42,7 +42,8 @@ export default class App extends Component {
       <section className="conteudo">
         <NoteForm 
           createNote={this.createNote} 
-          />
+          categories={this.state.categories}
+        />
         <main className="conteudo-principal">
         <CategoryList 
           categories={this.state.categories}
@@ -51,6 +52,7 @@ export default class App extends Component {
         <NoteList 
           notes={this.state.notes} 
           deleteNote={this.deleteNote}
+          categories={this.props.categories}
         />
         </main>
       </section>

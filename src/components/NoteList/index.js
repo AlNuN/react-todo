@@ -11,7 +11,9 @@ export default class NoteList extends Component {
             return (
               <li className="note-list_item" key={index}>
                 <NoteCard 
-                  note={note}
+                  title={note.title}
+                  text={note.note}
+                  category={note.category}
                   index={index}
                   deleteNote={this.props.deleteNote}
                 />

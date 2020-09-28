@@ -8,9 +8,11 @@ export default class NoteForm extends Component{
 
     this.title = '';
     this.note = '';
+    this.category = 'Sem categoria';
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleNoteChange = this.handleNoteChange.bind(this);
+    this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.createNote = this.createNote.bind(this);
   }
 
@@ -24,10 +26,15 @@ export default class NoteForm extends Component{
     this.note = event.target.value;
   }
 
+  handleCategoryChange(event){
+    event.stopPropagation();
+    this.category = event.target.value;
+  }
+
   createNote(event){
     event.preventDefault();
     event.stopPropagation();
-    this.props.createNote(this.title, this.note);
+    this.props.createNote(this.note, this.title, this.category);
   }
 
   render() {
@@ -35,6 +42,17 @@ export default class NoteForm extends Component{
       <form className="note-form"
         onSubmit={this.createNote}
       >
+        <select 
+          className="form-cadastro_input"
+          onChange={this.handleCategoryChange}
+        >
+          <option>Sem Categoria</option>
+          {this.props.categories.map((category, index) => {
+            return (
+              <option key={index}>{category}</option>
+            )
+          })}
+        </select>
         <input 
           className="note-form_input" 
           type="text" 
