@@ -6,7 +6,10 @@ export default class CategoryList extends Component{
   constructor() {
     super();
 
+    this.state = {categories: []};
+
     this.handlerInputEvent = this.handlerInputEvent.bind(this);
+    this.newCategories = this.newCategories.bind(this);
   }
 
   handlerInputEvent(e) {
@@ -16,11 +19,23 @@ export default class CategoryList extends Component{
     } 
   }
 
+  newCategories(categories){
+    this.setState({...this.state, categories})
+  }
+
+  componentDidMount() {
+    this.props.categories.subscribe(this.newCategories);
+  }
+
+  componentWillUnmount() {
+    this.props.categories.unsubscribe(this.newCategories);
+  }
+
   render(){
     return(
       <section className="category-list">
         <ul className="category-list_list">
-          {this.props.categories.map((category, index)=> {
+          {this.state.categories.map((category, index)=> {
             return (
               <li 
                 className="category-list_item"

@@ -6,14 +6,29 @@ export default class NoteForm extends Component{
   constructor(props){
     super(props);
 
+    this.state = {categories:[]};
+
     this.title = '';
-    this.note = '';
+    this.text = '';
     this.category = 'Sem categoria';
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleNoteChange = this.handleNoteChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.createNote = this.createNote.bind(this);
+    this.newCategories = this.newCategories.bind(this);
+  }
+
+  newCategories(categories){
+    this.setState({...this.state, categories});
+  }
+
+  componentDidMount() {
+    this.props.categories.subscribe(this.newCategories);
+  }
+
+  componentWillUnmount() {
+    this.props.categories.unsubscribe(this.newCategories);
   }
 
   handleTitleChange(event){
@@ -23,7 +38,7 @@ export default class NoteForm extends Component{
 
   handleNoteChange(event){
     event.stopPropagation();
-    this.note = event.target.value;
+    this.text = event.target.value;
   }
 
   handleCategoryChange(event){
@@ -34,7 +49,7 @@ export default class NoteForm extends Component{
   createNote(event){
     event.preventDefault();
     event.stopPropagation();
-    this.props.createNote(this.note, this.title, this.category);
+    this.props.addNote(this.title, this.text, this.category);
   }
 
   render() {
@@ -47,7 +62,7 @@ export default class NoteForm extends Component{
           onChange={this.handleCategoryChange}
         >
           <option>Sem Categoria</option>
-          {this.props.categories.map((category, index) => {
+          {this.state.categories.map((category, index) => {
             return (
               <option key={index}>{category}</option>
             )

@@ -4,55 +4,35 @@ import CategoryList from './components/CategoryList/'
 import NoteList from './components/NoteList/';
 import './assets/index.css';
 import './assets/App.css';
+import Categories from './data/Categories';
+import NotesArray from './data/Notes';
 
 export default class App extends Component {
-
-  constructor(){
+  constructor() {
     super();
-    this.state = {
-      notes: [],
-      categories: [],
-    };
+    this.categories = new Categories();
+    this.notes = new NotesArray();
 
-    this.createNote = this.createNote.bind(this);
-    this.deleteNote = this.deleteNote.bind(this);
-    this.addCategory = this.addCategory.bind(this);
-  }
-
-  createNote(note, title, category) {
-    this.setState({notes: [
-      ...this.state.notes, { title, note, category }]
-    });
-  }
-
-  deleteNote(index) {
-    let newNotes = this.state.notes;
-    newNotes.splice(index,1);
-    this.setState({notes: newNotes})
-  }
-
-  addCategory(categoryName){
-    this.setState({categories: [
-      ...this.state.categories, categoryName
-    ]})
+    this.categories.addCategory = this.categories.addCategory.bind(this.categories);
+    this.notes.addNote = this.notes.addNote.bind(this.notes);
+    this.notes.deleteNote = this.notes.deleteNote.bind(this.notes);
   }
 
   render() {
     return (
       <section className="conteudo">
         <NoteForm 
-          createNote={this.createNote} 
-          categories={this.state.categories}
+          addNote={this.notes.addNote} 
+          categories={this.categories}
         />
         <main className="conteudo-principal">
         <CategoryList 
-          categories={this.state.categories}
-          addCategory={this.addCategory}
+          categories={this.categories}
+          addCategory={this.categories.addCategory}
         />
         <NoteList 
-          notes={this.state.notes} 
-          deleteNote={this.deleteNote}
-          categories={this.props.categories}
+          notes={this.notes} 
+          deleteNote={this.notes.deleteNote}
         />
         </main>
       </section>
