@@ -1,6 +1,6 @@
 # React todo
 
-This project was built during (Alura's)[https://www.alura.com.br/] react with classes course.
+This project was built during [Alura's](https://www.alura.com.br/) react with classes course.
 
 ## Available Scripts
 
