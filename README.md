@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React todo
+
+This project was built during (Alura's)[https://www.alura.com.br/] react with classes course.
 
 ## Available Scripts
 
